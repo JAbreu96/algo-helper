@@ -5,9 +5,7 @@ const MainPage = () => {
 
 
   return (
-    <>
-      <DragnDropContainer/>
-    </>
+      <DragnDropContainer />
   )
 }
 
