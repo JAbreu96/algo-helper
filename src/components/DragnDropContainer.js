@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, { useState, useCallback } from 'react';
 import update from 'immutability-helper';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -9,46 +9,115 @@ import { useDrop } from 'react-dnd';
 import '../css/DragnDropContainer.css';
 const DragnDropContainer = ({ x, y, children }) => {
 
-  // const [{ isOver }, drop] = useDrop(() => ({
-  //   accept: ItemTypes.CARD,
-  //   // drop: () => moveCard(x,y),
-  //   collect: monitor => ({
-  //     isOver: !!monitor.isOver(),
-  //   })
-  // }), [x, y]);
-
-  const [cards, setCards] = useState([
+  const [lists, createLists] = useState([
     {
-      id: 1,
-      text: "Card 1"
+      title: "To Do",
+      status: "todo"
     },
     {
-      id: 2,
-      text: "Card 2"
+      title: "Revisit",
+      status: "revisit"
+    },
+    {
+      title: "Done",
+      status: "done"
     }
   ])
 
+  // HARDCODED CARDS
+  const [cards, createCards] = useState({
+    todo: [{
+      id: "qwe1",
+      title: "Card 1",
+      status: "todo",
+      order: 1,
+      label: "UI Dev"
+    },
+    {
+      id: "qwe2",
+      title: "Card 2",
+      status: "todo",
+      order: 2,
+      label: "UI Dev"
+    }],
+    revisit: [],
+    done: []
+  })
 
-  //Updates new State with card at different position
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
-    setCards((prevCards) => 
-      update(prevCards, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, prevCards[dragIndex]]
-        ],
-      }),
-    )
-  }, [])
+  //ChangeCard Handler
+  const cardChangeHandler = (cardInfo, newStatus, targetCardId) => {
+    const { id, status: oldStatus } = cardInfo;
 
+    //Finds element within the card collection of a list
+    let dropCard = cards[oldStatus].find((el => el.id === id)); //Card we are dropping
+    let targetCard = targetCardId !== ""
+      ? cards[newStatus].find(el => el.id === targetCardId) : null; //Card we are targeting
+
+    //finds the max order value INVESTIGATE
+    let newListOrderValueMax = cards[newStatus]
+      .map(item => item.order)
+      .reduce((maxV, a) => Math.max(maxV, a), 0)
+
+    //Case 1: If same list: work only this if block then return
+    if (oldStatus === newStatus) {
+
+      // reorders the list
+      let temp = cards[oldStatus].map(item => {
+        //Checks if item is the same as the card we are dropping
+        if (item.id === dropCard.id) {
+          return {
+            ...dropCard,
+            order: targetCard
+              ? targetCard.order - 1 : newListOrderValueMax + 1
+          };
+        }
+        return item;
+      }).sort((a, b) => a.order - b.order)
+        .map((item, i) => {
+          return { ...item, order: i + 1 }
+        });
+
+      // Call State change
+      createCards((item) => {
+        return { ...item, [oldStatus]: temp };
+      });
+      return;
+    }
+
+    // Case 2: Drag across multiple lists
+    let tempGaveList = cards[oldStatus]
+      .filter((item) => item.id !== id)
+      .sort((a, b) => a.order - b.order)
+      .map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+
+    let tempRecievedList = [
+      ...cards[newStatus],
+      {
+        ...dropCard,
+        order: targetCard
+          ? targetCard.order - 1
+          : newListOrderValueMax + 1,
+      },
+    ]
+      .sort((a, b) => a.order - b.order)
+      .map((item, i) => {
+        return { ...item, order: i + 1 };
+      })
+
+    createCards((card) => {
+      return { ...card, [oldStatus]: tempGaveList, newStatus: tempRecievedList };
+    })
+  }
   return (
-    <DndProvider backend={HTML5Backend}>
-      <section className="lists-container">
-        <ListColumn cards={cards} moveCard={moveCard}/>
-        <ListColumn cards={[]} moveCard={moveCard}/>
-        {/* <ListColumn /> */}
-      </section>
-    </ DndProvider>
+
+
+    <section className="lists-container">
+      {lists.map((list, i) => {
+        return <ListColumn key={list.title} title={list.title} status={list.status} cards={cards[list.status]} onChange={cardChangeHandler}/>
+      })}
+    </section>
   )
 }
 

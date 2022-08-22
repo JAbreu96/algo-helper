@@ -1,74 +1,63 @@
-import React, {useRef} from 'react';
-import {ItemTypes} from '../utility/DragTypes.js';
-import {useDrag, useDrop} from 'react-dnd';
-import {Card} from '@mui/material';
-const Cell = ({id, text, index, moveCard}) => {
-  // const [{isDragging}, drag] = useDrag(() => ({
-  //   type: ItemTypes.CARD,
-  //   collect: monitor => ({
-  //     isDragging: !!monitor.isDragging(),
-  //   }),
-  // }))
-  const ref = useRef(null);
-  
-  const [{handlerId}, drop] = useDrop({
-    accept: ItemTypes.CARD,
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      }
-    },
-    hover(item, monitor) {
-      if (!ref.current) {
-        return;
-      }
+import React, { useState } from 'react';
+import { Card } from '@mui/material';
+const Cell = ({ info, handlers, status }) => {
+  const {id} = info;
+  console.log(info);
+  const [onHold, setOnHold] = useState(false);
 
-      const dragIndex = item.index
-      const hoverIndex = index
-      
-      if (dragIndex === hoverIndex) {
-        return;
-      }
+  const dragStartHandler = (e) => {
+    e.dataTransfer.setData("cardInfo", JSON.stringify({id, status}));
+    e.target.className += " onhold";
+    setTimeout(() => {
+      setOnHold(true);
+    }, 0);
+  };
 
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+  const dragEndHandler = (e) => {
+    setOnHold(false);
+  }
 
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+  const onDragOverHandler = (e) => {
+    e.preventDefault();
+    if (e.target.className === "card") {
+      setTimeout(() => {
+        e.target.className = "card anotherCardOnTop";
+      }, 0);
+    }
+  };
 
-      const clientOffset = monitor.getClientOffset();
+  const onDragLeaveHandler = (e) => {
+    resetClassName(e);
+  }
 
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+  const onDropHandler = (e) => {
+    resetClassName(e);
+  }
 
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
-
-      moveCard(dragIndex, hoverIndex);
-
-      item.index = hoverIndex;
-    },
-  })
-
-  const [{isDragging}, drag] = useDrag({
-    type: ItemTypes.CARD,
-    item: () => {return {id, index}},
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  })
-
-  drag(drop(ref));
+  const resetClassName = (e) => {
+    e.preventDefault();
+    let isCard =
+      e.target.className === "card" || e.target.className === "card anotherCardOnTop";
+    
+    if (isCard) {
+      setTimeout(() => {
+        e.target.className = "card";
+      }, 0);
+    }
+  };
 
   return (
     <div
-      ref={ref}
-      data-handler-id={handlerId}
-      className='draggable-card'
+      id={id}
+      className={`card ${onHold ? "hidden" : ""}`}
+      draggable="true"
+      onDragStart={dragStartHandler}
+      onDragEnd={dragEndHandler}
+      onDragOver={onDragOverHandler}
+      onDragLeave={onDragLeaveHandler}
+      onDrop={onDropHandler}
     >
-      <Card variant="outlined">{text}</Card>
+      <Card variant="outlined">{info.title}</Card>
     </div>
   )
 }
