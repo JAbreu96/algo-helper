@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Card } from '@mui/material';
 const Cell = ({ info, handlers, status }) => {
   const {id} = info;
-  console.log(info);
   const [onHold, setOnHold] = useState(false);
 
   const dragStartHandler = (e) => {

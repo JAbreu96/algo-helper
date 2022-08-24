@@ -34,7 +34,7 @@ const ListColumn = ({ title, cards, status, onChange }) => {
 
     let cardInfo = JSON.parse(e.dataTransfer.getData("cardInfo"));
     let targetCardId = e.target.id;
-
+    
     onChange(cardInfo, status, targetCardId);
     onDragLeaveHandler(e);
   }

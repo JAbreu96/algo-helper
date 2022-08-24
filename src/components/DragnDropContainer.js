@@ -9,21 +9,6 @@ import { useDrop } from 'react-dnd';
 import '../css/DragnDropContainer.css';
 const DragnDropContainer = ({ x, y, children }) => {
 
-  const [lists, createLists] = useState([
-    {
-      title: "To Do",
-      status: "todo"
-    },
-    {
-      title: "Revisit",
-      status: "revisit"
-    },
-    {
-      title: "Done",
-      status: "done"
-    }
-  ])
-
   // HARDCODED CARDS
   const [cards, createCards] = useState({
     todo: [{
@@ -91,7 +76,6 @@ const DragnDropContainer = ({ x, y, children }) => {
       .map((item, i) => {
         return { ...item, order: i + 1 };
       });
-
     let tempRecievedList = [
       ...cards[newStatus],
       {
@@ -107,15 +91,13 @@ const DragnDropContainer = ({ x, y, children }) => {
       })
 
     createCards((card) => {
-      return { ...card, [oldStatus]: tempGaveList, newStatus: tempRecievedList };
+      return { ...card, [oldStatus]: tempGaveList, [newStatus]: tempRecievedList };
     })
   }
   return (
-
-
     <section className="lists-container">
-      {lists.map((list, i) => {
-        return <ListColumn key={list.title} title={list.title} status={list.status} cards={cards[list.status]} onChange={cardChangeHandler}/>
+      {Object.keys(cards).map((key, i) => {
+        return <ListColumn key={key} title={key} status={key} cards={cards[key]} onChange={cardChangeHandler} />
       })}
     </section>
   )
