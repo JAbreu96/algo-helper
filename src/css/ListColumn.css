@@ -1,0 +1,14 @@
+.listColumn-container {
+  width: 250px !important;
+  height: 150vh !important;
+  border: 5px dotted red;
+  display: flex !important;
+  flex-direction: column;
+  padding-top: 5vh;
+  justify-content: start;
+}
+
+.boardContentArea {
+  width: inherit !important;
+  height: inherit !important;
+}
