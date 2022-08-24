@@ -4,7 +4,7 @@ import Cell from './Cell.js';
 
 import '../css/ListColumn.css';
 
-const ListColumn = ({ title, cards, status, onChange }) => {
+const ListColumn = ({ title, cards, status, onChange, addCard }) => {
 
   let sorted = cards.sort((a, b) => a.order - b.order);
 
@@ -34,7 +34,7 @@ const ListColumn = ({ title, cards, status, onChange }) => {
 
     let cardInfo = JSON.parse(e.dataTransfer.getData("cardInfo"));
     let targetCardId = e.target.id;
-    
+
     onChange(cardInfo, status, targetCardId);
     onDragLeaveHandler(e);
   }
@@ -50,12 +50,15 @@ const ListColumn = ({ title, cards, status, onChange }) => {
           onDragLeave={onDragLeaveHandler}
           onDrop={onDropHandler}
         >
-        {
-          cards.map((card, i) => {
-            return <Cell key={`status-${card.id}`} info={card} status={status} />
-          })
-        }
+          {
+            cards.map((card, i) => {
+              return <Cell key={`status-${card.id}`} info={card} status={status} questionType={card.questionType} />
+            })
+          }
         </div>
+        <input type='button' value="add card" onClick={() => {
+          addCard(status);
+        }} />
       </Container>
     </>
   )

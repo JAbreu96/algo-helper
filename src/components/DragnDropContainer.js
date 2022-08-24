@@ -8,23 +8,10 @@ import { useDrop } from 'react-dnd';
 
 import '../css/DragnDropContainer.css';
 const DragnDropContainer = ({ x, y, children }) => {
-
-  // HARDCODED CARDS
+  const [count, updateCount] = useState(0);
+  // Cards State
   const [cards, createCards] = useState({
-    todo: [{
-      id: "qwe1",
-      title: "Card 1",
-      status: "todo",
-      order: 1,
-      label: "UI Dev"
-    },
-    {
-      id: "qwe2",
-      title: "Card 2",
-      status: "todo",
-      order: 2,
-      label: "UI Dev"
-    }],
+    todo: [],
     revisit: [],
     done: []
   })
@@ -94,10 +81,52 @@ const DragnDropContainer = ({ x, y, children }) => {
       return { ...card, [oldStatus]: tempGaveList, [newStatus]: tempRecievedList };
     })
   }
+
+  //ADD CARDS
+  /*
+  //SHOWN TO USER
+  Expected Obj:
+  Title: String
+  Difficulty: 0 - 2
+  Time: int
+  Time & Space Complexity: String
+  Link to Problem
+  Comments
+
+  //NOT SHOWN
+  id: int
+  status: string
+  order: int
+  */
+
+  const addCard = (status) => {
+    let card = {
+      id: "qwe" + count,
+      title: "New Card",
+      status: status,
+      order: cards[status].length + 1,
+      difficulty: 0,
+      time: 30,
+      timeSpace: 'O(n)',
+      link: '',
+      questionType: 'Arrays',
+      comments: ''
+    }
+
+
+    updateCount(count + 1);
+    // const newList = [...cards[status], card];
+
+    createCards((item) => {
+      return { ...item, [status]: [...cards[status], card] }
+    })
+
+  }
+
   return (
     <section className="lists-container">
       {Object.keys(cards).map((key, i) => {
-        return <ListColumn key={key} title={key} status={key} cards={cards[key]} onChange={cardChangeHandler} />
+        return <ListColumn key={key} title={key} status={key} cards={cards[key]} onChange={cardChangeHandler} addCard={addCard} />
       })}
     </section>
   )
