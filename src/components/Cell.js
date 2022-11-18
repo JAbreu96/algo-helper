@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card } from '@mui/material';
-const Cell = ({ info, handlers, status }) => {
+const Cell = ({ info, handlers, status, toggleModal }) => {
   const {id} = info;
   const [onHold, setOnHold] = useState(false);
 
@@ -56,7 +56,23 @@ const Cell = ({ info, handlers, status }) => {
       onDragLeave={onDragLeaveHandler}
       onDrop={onDropHandler}
     >
-      <Card variant="outlined">{info.title}</Card>
+      <Card variant="outlined">
+      <p >{info.platform}</p>
+      <p >{info.problemName}</p>
+      <p >{info.difficulty}</p>
+      {
+        (function() {
+          if (info.completed) {
+            return <p>Complete</p>
+          }
+          return <p>Incomplete</p>
+        })()
+      }
+      <input type="button" value="Edit" onClick={(e) => {
+        toggleModal(info);
+        e.preventDefault();
+      }}/>
+      </Card>
     </div>
   )
 }

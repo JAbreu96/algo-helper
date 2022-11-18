@@ -4,7 +4,7 @@ import Cell from './Cell.js';
 
 import '../css/ListColumn.css';
 
-const ListColumn = ({ title, cards, status, onChange, addCard }) => {
+const ListColumn = ({ title, cards, status, onChange, addCard, toggleModal }) => {
 
   let sorted = cards.sort((a, b) => a.order - b.order);
 
@@ -52,7 +52,7 @@ const ListColumn = ({ title, cards, status, onChange, addCard }) => {
         >
           {
             cards.map((card, i) => {
-              return <Cell key={`status-${card.id}`} info={card} status={status} questionType={card.questionType} />
+              return <Cell key={`status-${card.id}`} info={card} status={status} questionType={card.questionType} toggleModal={toggleModal}/>
             })
           }
         </div>
