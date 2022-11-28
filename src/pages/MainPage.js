@@ -6,6 +6,7 @@ import CARD_INFO from '../constants/CardInfo.js';
 const MainPage = () => {
   const [cardEdit, toggleCardEdit] = useState(false);
   const [count, updateCount] = useState(0);
+  const [modalInputs, updateInputs] = useState({index: -1, status: 'todo'});
   // Cards State
   const [cards, createCards] = useState({
     todo: [],
@@ -92,19 +93,24 @@ const MainPage = () => {
     })
 
   }
-  const toggleModal = (info) => {
-    console.log('tiggered')
+  const toggleModal = (index, status) => {
     if (cardEdit) {
       toggleCardEdit(false)
     } else {
       toggleCardEdit(true);
     }
+
+    populateModal(index, status);
+  }
+
+  const populateModal = (index, status) => {
+    updateInputs({index: index, status: status})
   }
 
   return (
     <>
       <DragnDropContainer cardToggled={false} toggleModal={toggleModal} count={count} updateCount={updateCount} cardChangeHandler={cardChangeHandler} addCard={addCard} cards={cards} />
-      <CellModal open={cardEdit}/>
+      <CellModal open={cardEdit} toggleModal={toggleModal} cardInfo={modalInputs} cards={cards}/>
     </>
   )
 }

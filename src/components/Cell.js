@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card } from '@mui/material';
-const Cell = ({ info, handlers, status, toggleModal }) => {
+const Cell = ({ info, handlers, status, toggleModal, index }) => {
   const {id} = info;
   const [onHold, setOnHold] = useState(false);
 
@@ -69,7 +69,7 @@ const Cell = ({ info, handlers, status, toggleModal }) => {
         })()
       }
       <input type="button" value="Edit" onClick={(e) => {
-        toggleModal(info);
+        toggleModal(index, status);
         e.preventDefault();
       }}/>
       </Card>
