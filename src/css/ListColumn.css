@@ -1,6 +1,6 @@
 .listColumn-container {
   width: 250px !important;
-  height: 150vh !important;
+  height: fit-content !important;
   border: 5px dotted red;
   display: flex !important;
   flex-direction: column;
@@ -10,5 +10,10 @@
 
 .boardContentArea {
   width: inherit !important;
-  height: inherit !important;
+  height: fit-content !important;
+  padding: 10px;
+}
+
+input {
+  margin-top: 20px;
 }
