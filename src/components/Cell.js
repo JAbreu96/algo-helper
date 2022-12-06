@@ -57,21 +57,35 @@ const Cell = ({ info, handlers, status, toggleModal, index }) => {
       onDrop={onDropHandler}
     >
       <Card variant="outlined">
-      <p >{info.platform}</p>
-      <p >{info.problemName}</p>
-      <p >{info.difficulty}</p>
-      {
-        (function() {
-          if (info.completed) {
-            return <p>Complete</p>
+        <div className='card_status'>
+          {
+            (function() {
+              if (info.difficulty === 'easy') {
+                return <p className={'card_status_difficulty'} style={{'backgroundColor': 'green'}}>0</p>
+              }
+              if (info.difficulty === 'medium') {
+                return <p className={'card_status_difficulty'} style={{'backgroundColor': 'yellow'}}>0</p>
+              }
+              if (info.difficulty === 'hard') {
+                return <p className={'card_status_difficulty'} style={{'backgroundColor': 'red'}}>0</p>
+              }
+            })()
           }
-          return <p>Incomplete</p>
-        })()
-      }
-      <input type="button" value="Edit" onClick={(e) => {
-        toggleModal(index, status);
-        e.preventDefault();
-      }}/>
+          {
+            (function() {
+              if (info.completed) {
+                return <p className={'card_status_complete'} style={{'color': 'green'}}>Complete</p>
+              }
+              return <p className={'card_status_complete'} style={{'color': 'grey'}}>Incomplete</p>
+            })()
+          }
+        </div>
+        <p className={'card_platform'}>{info.platform}</p>
+        <p className={'card_problem'}>{info.problemName}</p>
+        <input className={'card_btn'} type="button" value="Edit" onClick={(e) => {
+          toggleModal(index, status);
+          e.preventDefault();
+        }}/>
       </Card>
     </div>
   )

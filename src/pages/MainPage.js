@@ -107,10 +107,16 @@ const MainPage = () => {
     updateInputs({index: index, status: status})
   }
 
+  const changeCardInfo = (cardInfo, property, newValue) => {
+    
+    cards[cardInfo.status][cardInfo.index] = {...cards[cardInfo.status][cardInfo.index], [property]: newValue};
+    createCards({...cards});
+  }
+
   return (
     <>
       <DragnDropContainer cardToggled={false} toggleModal={toggleModal} count={count} updateCount={updateCount} cardChangeHandler={cardChangeHandler} addCard={addCard} cards={cards} />
-      <CellModal open={cardEdit} toggleModal={toggleModal} cardInfo={modalInputs} cards={cards}/>
+      <CellModal open={cardEdit} toggleModal={toggleModal} changeCardInfo={changeCardInfo} cardInfo={modalInputs} cards={cards}/>
     </>
   )
 }
