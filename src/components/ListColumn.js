@@ -39,10 +39,10 @@ const ListColumn = ({ title, cards, status, onChange, addCard, toggleModal }) =>
 
   return (
     <>
-      <Container className="listColumn-container">
-        <h3>{title}</h3>
+      <Container className="listColumn_container">
+        <h3 className='listColumn_container_title'>{title}</h3>
         <div
-          className="boardContentArea"
+          className="boardContentArea column_container"
           onDragEnter={onDragEnterHandler}
           onDragOver={onDragOverHandler}
           onDragLeave={onDragLeaveHandler}
@@ -54,7 +54,7 @@ const ListColumn = ({ title, cards, status, onChange, addCard, toggleModal }) =>
             })
           }
         </div>
-        <input type='button' value="add card" onClick={() => {
+        <input className="listColumn_container_add" type='button' value="add card" onClick={() => {
           addCard(status);
         }} />
       </Container>
