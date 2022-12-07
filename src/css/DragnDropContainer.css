@@ -1,5 +1,6 @@
-.lists-container {
+.lists_container {
   padding-top: 10vh;
   display: flex !important;
-  justify-content: row !important;
+  justify-content: space-between !important;
+  flex-direction: row !important;
 }
