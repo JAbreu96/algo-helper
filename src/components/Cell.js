@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Card } from '@mui/material';
+
+import '../css/Cell.css';
+
 const Cell = ({ info, handlers, status, toggleModal, index }) => {
   const {id} = info;
   const [onHold, setOnHold] = useState(false);
@@ -56,36 +59,40 @@ const Cell = ({ info, handlers, status, toggleModal, index }) => {
       onDragLeave={onDragLeaveHandler}
       onDrop={onDropHandler}
     >
-      <Card variant="outlined">
-        <div className='card_status'>
-          {
-            (function() {
-              if (info.difficulty === 'easy') {
-                return <p className={'card_status_difficulty'} style={{'backgroundColor': 'green'}}>0</p>
-              }
-              if (info.difficulty === 'medium') {
-                return <p className={'card_status_difficulty'} style={{'backgroundColor': 'yellow'}}>0</p>
-              }
-              if (info.difficulty === 'hard') {
-                return <p className={'card_status_difficulty'} style={{'backgroundColor': 'red'}}>0</p>
-              }
-            })()
-          }
-          {
-            (function() {
-              if (info.completed) {
-                return <p className={'card_status_complete'} style={{'color': 'green'}}>Complete</p>
-              }
-              return <p className={'card_status_complete'} style={{'color': 'grey'}}>Incomplete</p>
-            })()
-          }
+      <Card variant="outlined" className='card_container'>
+        {
+          (function() {
+            if (info.difficulty === 'easy') {
+              return <div className={'card_container_difficulty'} style={{'backgroundColor': 'green'}}></div>
+            }
+            if (info.difficulty === 'medium') {
+              return <div className={'card_container_difficulty'} style={{'backgroundColor': 'yellow'}}></div>
+            }
+            if (info.difficulty === 'hard') {
+              return <div className={'card_container_difficulty'} style={{'backgroundColor': 'red'}}></div>
+            }
+          })()
+        }
+        <div className='card_container_info'>
+          <div className='card_container_info_text'>
+            <p className={'card_container_info_text_platform'}>{info.platform}</p>
+            <p className={'card_container_info_text_problem'}>{info.problemName}</p>
+          </div>
+          <div className='card_container_info_action'>
+            <input className={'card_container_info_action_btn'} type="button" value="Edit" onClick={(e) => {
+              toggleModal(index, status);
+              e.preventDefault();
+            }}/>
+            {
+              (function() {
+                if (info.completed) {
+                  return <p className={'card_container_info_action_complete'} style={{'color': 'green'}}>Complete</p>
+                }
+                return <p className={'card_container_info_action_complete'} style={{'color': 'grey'}}>Incomplete</p>
+              })()
+            }
+          </div>
         </div>
-        <p className={'card_platform'}>{info.platform}</p>
-        <p className={'card_problem'}>{info.problemName}</p>
-        <input className={'card_btn'} type="button" value="Edit" onClick={(e) => {
-          toggleModal(index, status);
-          e.preventDefault();
-        }}/>
       </Card>
     </div>
   )

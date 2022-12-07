@@ -1,3 +1,80 @@
 .draggable-card {
   cursor: 'move'
 }
+
+.card {
+  border-radius: 15px !important;
+  margin-top: 5px;
+}
+
+.card_container {
+  display: flex !important;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.317) !important;
+}
+
+.card_container_difficulty {
+  height: inherit;
+  width: 15%;
+  margin: 0;
+}
+
+.card_container_info {
+  width: 85%;
+  display:flex;
+  flex-direction: column;
+}
+
+.card_container_info_action {
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-end;
+}
+
+.card_container_info_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+.card_container_info_text >* {
+  width: fit-content;
+  margin: 0;
+}
+
+.card_container_info_text_platform {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+.card_container_info_text_problem {
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card_container_info_action_btn {
+  margin-left: 35%;
+  border: none;
+  background-color: rgb(206, 135, 42);
+  color: white;
+  font-family:sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 5px;
+  height: 30px;
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.card_container_info_action_complete {
+  font-family: sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 3px;
+  margin-right: 3px;
+  align-self: flex-end;
+}
