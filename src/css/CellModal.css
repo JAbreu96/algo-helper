@@ -1,3 +1,37 @@
+.modal {
+    display: flex;
+    justify-content: center;
+}
+
 .modal_card {
     background-color: white;
+    width: 60%;
+    padding: 10px 15px;
+}
+
+.modal_card_form {
+    display: flex;
+}
+
+.modal_card_form input {
+    margin: 2px 0 10px 0;
+}
+
+.modal_card_form_left {
+    width:70%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+}
+
+.modal_card_form_right {
+    width:30%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.modal_card_form_difficulty {
+    display:flex;
+    flex-direction: column;
 }

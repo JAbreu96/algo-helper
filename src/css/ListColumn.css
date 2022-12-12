@@ -3,7 +3,7 @@
   height: fit-content !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: start !important;
+  justify-content: flex-start !important;
   align-content: center !important;
   background-color: white;
   border-radius: 10px;
@@ -34,7 +34,7 @@
 .boardContentArea {
   display: flex !important;
   flex-direction: column !important;
-  justify-content: start !important;
+  justify-content: flex-start !important;
   align-content: center !important;
   width: 100% !important;
   height: fit-content;

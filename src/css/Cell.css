@@ -34,7 +34,7 @@
 .card_container_info_text {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   margin-left: 5px;
   margin-top: 10px;
 }
