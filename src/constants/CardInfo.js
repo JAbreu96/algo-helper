@@ -19,4 +19,4 @@ const CARD_INFO = {
   order: 0,
 }
 
-export default CARD_INFO
+export default CARD_INFO;

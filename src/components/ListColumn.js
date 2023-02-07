@@ -50,7 +50,7 @@ const ListColumn = ({ title, cards, status, onChange, addCard, toggleModal }) =>
         >
           {
             cards.map((card, i) => {
-              return <Cell index={i} key={`status-${card.id}`} info={card} status={status} questionType={card.questionType} toggleModal={toggleModal}/>
+              return <Cell index={i} key={`status-${card.id}`} info={card} status={status} questionType={card.questionType} toggleModal={toggleModal} />
             })
           }
         </div>
