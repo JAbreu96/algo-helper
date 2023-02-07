@@ -23,7 +23,7 @@ const MainPage = (props) => {
     <>
       <NavBar />
       <DragnDropContainer cardToggled={false} toggleModal={toggleModal} count={count} updateCount={updateCount} cardChangeHandler={cardChangeHandler} addCard={addCard} cards={cards} />
-      <CellModal open={cardEdit} toggleModal={toggleModal} changeCardInfo={changeCardInfo} cardInfo={modalInputs} cards={cards} />
+      <CellModal open={cardEdit} toggleModal={toggleModal} changeCardInfo={changeCardInfo} cardInfo={modalInputs} cards={cards} userId={userInfo.id} />
     </>
   )
 }

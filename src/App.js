@@ -14,11 +14,12 @@ function App() {
   //Selects specific card to populate modal
   const [modalInputs, updateInputs] = useState({ index: -1, status: 'todo' });
   // Cards State
-  const [cards, createCards] = useState([
-    { status: "todo", RESULT: [], },
-    { status: "revisit", RESULT: [] },
-    { status: "done", RESULT: [] }
-  ])
+  const [cards, createCards] = useState({
+    todo: [],
+    revisit: [],
+    done: [],
+    refresh: []
+  });
 
   //ChangeCard Handler
   const cardChangeHandler = (cardInfo, newStatus, targetCardId) => {
@@ -152,7 +153,7 @@ function App() {
       }
       axios(cardsConfig)
         .then(response => {
-          console.log(response.data);
+          createCards(response.data[0]);
         }).catch((err) => {
           console.log(err);
         }).finally(response => {

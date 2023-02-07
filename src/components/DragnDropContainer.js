@@ -9,9 +9,9 @@ const DragnDropContainer = ({ x, y, children, count, updateCount, cards, createC
 
   return (
     <section className="lists_container">
-      {cards.map((category, i) => {
-
-        return <ListColumn key={category.status} title={category.status} status={category.status} cards={category.RESULT} onChange={cardChangeHandler} addCard={addCard} toggleModal={toggleModal} />
+      {Object.keys(cards).map((key, i) => {
+        const category = cards[key];
+        return <ListColumn key={key} title={key} status={key} cards={category} onChange={cardChangeHandler} addCard={addCard} toggleModal={toggleModal} />
       })}
     </section>
   )
